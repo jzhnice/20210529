@@ -68,31 +68,33 @@ public class Washer {
     public static String getFinishedStatus() {
         return FINISHED_STATUS;
     }
-
+        //读取洗衣模式
     public int getMode() {
         return mode;
     }
 
-    public void setMode(int mode) {
+    public void setMode(int mode) {//设置洗衣模式
+//            只有在开机状态或暂停状态，才能设置洗衣模式
         if(status.equals(ON_STATUS) || status.equals(SUSPEND_STATUS)) {
             this.mode = mode;
         }
     }
 
-    public int getWaterLevel() {
+    public int getWaterLevel() {  //读取水位
         return waterLevel;
     }
 
     public void setWaterLevel(int waterLevel) {
+        //只有在开机状态或暂停状态  才能设置水位
         if(status.equals(ON_STATUS) || status.equals(SUSPEND_STATUS)) {
             this.waterLevel = waterLevel;
         }
     }
-
+//  获取洗衣机的状态
     public String getStatus() {
         return status;
     }
-
+//设置洗衣机的状态
     public void setStatus(String status) {
         this.status = status;
         System.out.println("进入"+status);
@@ -106,11 +108,11 @@ public class Washer {
         this.clothes = clothes;
     }
 
-    public void on(){
+    public void on(){  //开机
         setStatus(ON_STATUS);
     }
 
-    public void off(){
+    public void off(){  //  关机
         setStatus(OFF_STATUS);
     }
 
@@ -125,6 +127,7 @@ public class Washer {
     }
 
     public void start() {
+//        只有在开机状态或暂停状态才可以转到洗衣状态
         if (status.equals(ON_STATUS) || status.equals(SUSPEND_STATUS)) {
             setStatus(WASHING_STATUS);
             System.out.println("洗衣机卖力地洗" + clothes + "..");
@@ -133,7 +136,8 @@ public class Washer {
 
         }
     }
-        public void suspend(){
+        public void suspend(){  //暂停
+        // 只有洗衣状态才可以暂停
             if(status.equals(WASHING_STATUS)) {
                 setStatus(SUSPEND_STATUS);
             }
@@ -142,13 +146,14 @@ public class Washer {
 
     public static void main(String[] args) {
         Washer washer = new Washer();
-        washer.on();
-        washer.setMode(2);
+        washer.on();//开机
+        washer.setMode(2); // 洗衣模式设成快洗
+               // 创建一个对象，表示脏衬衫
         Clothes clothes = new Clothes("衬衫",false);
-        washer.putClothes(clothes);
-        washer.start();
-        washer.takeOutClothes();
-        washer.off();
+        washer.putClothes(clothes);  // 放入衬衫
+        washer.start();//开始洗衬衫
+        washer.takeOutClothes();// 取出衬衫
+        washer.off();// 关机
         System.out.println(clothes.getName()+"是否洗干净"+clothes.isClean());
     }
 
